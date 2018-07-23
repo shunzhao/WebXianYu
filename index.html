@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="static/css/bootstrap.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style type="text/css">
+    	body{
+    		background-color: #F0F0F0;
+    	}
+    	p{
+    		margin-top: 100px;
+    	}
+    </style>
+</head>
+<body>
+	<div class="container">
+		<div class="page-header">
+			<h1 class="text-center">淘宝二手闲鱼搜索<br><small>请先登录淘宝后再使用</small></h1>
+		</div>
+		<div class="row">
+			<div class="col-md-6 col-xs-12 col-sm-12 col-md-offset-3">
+				<ul class="nav nav-tabs">
+					<li role="presentation" class="active"><a href='#'>搜索商品</a></li>
+				  	<li role="presentation"><a href='#'>搜索用户</a></li>
+				</ul>
+				<div class="input-group">
+	      			<input type="text" class="form-control" placeholder="输入商品关键字吧！">
+	      			<span class="input-group-btn">
+	        			<button class="btn btn-info" type="button">
+							<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+	        			</button>
+	      			</span>
+	    		</div>
+			</div>
+		</div>
+	</div>
+	<div class="embed-responsive embed-responsive-16by9">
+		<iframe class="embed-responsive-item" src=""></iframe>
+	</div>
+	<p class="text-center text-muted navbar-fixed-bottom">
+		本站非官方网站，仅供搜索使用。如需购买请点击商品，在新打开的原页面购买！
+	</p>
+<script src="static/js/jquery.min.js"></script>
+<script src="static/js/bootstrap.min.js"></script>
+<script src="static/layer/layer.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$('.embed-responsive-item').hide();
+	});
+
+	var text = '搜索商品';
+	$('.nav.nav-tabs li').click(function (e) {
+	  e.preventDefault()
+	  $(this).tab('show');
+	  text = e.target.innerText;
+	  if(text === '搜索商品')
+	  {
+	  	$('.form-control').get(0).placeholder = '输入商品关键字吧！';
+	  }
+	  else
+	  {
+	  	$('.form-control').get(0).placeholder = '搜索该用户下所有商品！';
+	  }
+	});
+
+	$('.btn.btn-info').click(function () {
+		if($('.form-control').val() === '')
+		{
+			layer.msg("坏蛋，都不告诉人家要搜索什么！", {
+				icon: 5,
+				time:1000,
+				anim:6
+			});
+		}
+		else
+		{
+			$('.page-header').hide();
+			var keywords = $('.form-control').val();
+			if(text === '搜索商品')
+			{
+				var url = 'https://s.2.taobao.com/list/list.htm?_input_charset=utf8&q=' + keywords;
+			}
+			else
+			{
+				var url = 'https://s.2.taobao.com/list/list.htm?_input_charset=utf8&usernick=' + keywords;
+			}
+			$('.embed-responsive-item').show();
+			$('.embed-responsive-item').get(0).src = url;
+		}
+	});
+</script>
+</body>
+</html>
